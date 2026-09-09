@@ -25,7 +25,7 @@ tasks:
       - '@globs(sources)'
 
   build:
-    command: 'ags bundle app.ts'
+    command: 'ags bundle app.ts app'
     toolchains: 'system'
     inputs:
       - '@globs(sources)'

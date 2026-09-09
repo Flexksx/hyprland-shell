@@ -12,16 +12,16 @@ type ToggleTileProps = {
 export default function ToggleTile({ icon, label, sublabel, active, onToggle }: ToggleTileProps) {
   return (
     <button
-      cssName="toggle-tile"
+      name="toggle-tile"
       cssClasses={active.as((a) => (a ? ["active"] : []))}
       onClicked={onToggle}
     >
       <box spacing={8}>
         <image iconName={icon} />
-        <box vertical>
+        <box orientation={Gtk.Orientation.VERTICAL}>
           <label label={label} halign={Gtk.Align.START} />
           {sublabel && (
-            <label label={sublabel} halign={Gtk.Align.START} cssName="toggle-sublabel" />
+            <label label={sublabel} halign={Gtk.Align.START} name="toggle-sublabel" />
           )}
         </box>
       </box>

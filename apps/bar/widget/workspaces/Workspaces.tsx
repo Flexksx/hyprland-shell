@@ -6,7 +6,7 @@ function WorkspaceButton({ workspace }: { workspace: Hyprland.Workspace }) {
 
   return (
     <button
-      cssName="workspace-button"
+      name="workspace-button"
       cssClasses={createBinding(hyprland, "focusedWorkspace").as((focusedWorkspace) =>
         focusedWorkspace?.get_id() === workspace.get_id() ? ["focused"] : [],
       )}
@@ -26,7 +26,7 @@ export default function Workspaces() {
   )
 
   return (
-    <box cssName="workspaces">
+    <box name="workspaces">
       <For each={workspaces} id={(workspace) => workspace.get_id()}>
         {(workspace) => <WorkspaceButton workspace={workspace} />}
       </For>

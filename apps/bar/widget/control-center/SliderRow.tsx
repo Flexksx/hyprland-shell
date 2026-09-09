@@ -10,7 +10,7 @@ type SliderRowProps = {
 
 export default function SliderRow({ icon, value, onChanged, max = 1 }: SliderRowProps) {
   return (
-    <box cssName="slider-row" spacing={8}>
+    <box name="slider-row" spacing={8}>
       <image iconName={icon} />
       <slider
         hexpand

@@ -1,4 +1,4 @@
-import { Astal, type Gdk } from "ags/gtk4"
+import { Astal, type Gdk, Gtk } from "ags/gtk4"
 import app from "ags/gtk4/app"
 import NetworkService from "gi://AstalNetwork"
 import BluetoothService from "gi://AstalBluetooth"
@@ -31,8 +31,8 @@ function Toggles() {
   const dnd = createBinding(notifd, "dontDisturb")
 
   return (
-    <box cssName="toggles" homogeneous spacing={8}>
-      <box vertical spacing={8}>
+    <box name="toggles" homogeneous spacing={8}>
+      <box orientation={Gtk.Orientation.VERTICAL} spacing={8}>
         {wifi && wifiEnabled && wifiSsid && (
           <ToggleTile
             icon={wifiEnabled.as((on) =>
@@ -51,7 +51,7 @@ function Toggles() {
           onToggle={() => notifd.set_dont_disturb(!notifd.get_dont_disturb())}
         />
       </box>
-      <box vertical spacing={8}>
+      <box orientation={Gtk.Orientation.VERTICAL} spacing={8}>
         <ToggleTile
           icon={btPowered.as((on) =>
             on ? "bluetooth-active-symbolic" : "bluetooth-disabled-symbolic",
@@ -110,11 +110,11 @@ function ProfileSelector() {
   const iconName = createBinding(pp, "iconName")
 
   return (
-    <box cssName="profile-selector" spacing={8}>
+    <box name="profile-selector" spacing={8}>
       <image iconName={iconName} />
       {PROFILES.map((profile) => (
         <button
-          cssName="profile-button"
+          name="profile-button"
           cssClasses={activeProfile.as((a) => (a === profile ? ["active"] : []))}
           onClicked={() => pp.set_active_profile(profile)}
           tooltipText={PROFILE_LABELS[profile]}
@@ -133,7 +133,6 @@ export default function ControlCenter(gdkmonitor: Gdk.Monitor) {
     <window
       visible={false}
       name="control-center"
-      cssName="control-center"
       gdkmonitor={gdkmonitor}
       exclusivity={Astal.Exclusivity.NORMAL}
       anchor={TOP | RIGHT}
@@ -141,9 +140,9 @@ export default function ControlCenter(gdkmonitor: Gdk.Monitor) {
       application={app}
       keymode={Astal.Keymode.ON_DEMAND}
     >
-      <box vertical cssName="control-center-content" spacing={12}>
+      <box orientation={Gtk.Orientation.VERTICAL} name="control-center-content" spacing={12}>
         <Toggles />
-        <box cssName="sliders" vertical spacing={8}>
+        <box name="sliders" orientation={Gtk.Orientation.VERTICAL} spacing={8}>
           <VolumeSlider />
           <BrightnessSlider />
         </box>

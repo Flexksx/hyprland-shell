@@ -7,7 +7,7 @@ export default function Network() {
 
   if (!wifi) {
     return (
-      <box cssName="network">
+      <box name="network">
         <image iconName="network-wired-symbolic" />
       </box>
     )
@@ -17,7 +17,7 @@ export default function Network() {
   const ssid = createBinding(wifi, "ssid")
 
   return (
-    <box cssName="network" tooltipText={ssid}>
+    <box name="network" tooltipText={ssid}>
       <image iconName={iconName} />
     </box>
   )

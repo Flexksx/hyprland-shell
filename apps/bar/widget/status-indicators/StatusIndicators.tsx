@@ -18,7 +18,7 @@ export default function StatusIndicators() {
 
   return (
     <button
-      cssName="status-indicators"
+      name="status-indicators"
       onClicked={() => app.toggle_window("control-center")}
       tooltipText={volume.as((v) => `Volume: ${Math.round(v * 100)}%`)}
     >

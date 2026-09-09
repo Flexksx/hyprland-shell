@@ -9,7 +9,7 @@ export default function Battery() {
 
   return (
     <box
-      cssName="battery"
+      name="battery"
       visible={createBinding(battery, "isBattery")}
       tooltipText={charging.as((c) => (c ? "Charging" : "On Battery"))}
     >

@@ -1,273 +1,356 @@
-$fg: #{"@theme_fg_color"};
-$bg: #{"@theme_bg_color"};
-$accent: #{"@accent_bg_color"};
-$accent-fg: #{"@accent_fg_color"};
-$dim: #{"alpha(@theme_fg_color, 0.6)"};
-$surface: #{"alpha(@theme_fg_color, 0.08)"};
-$hover: #{"alpha(@theme_fg_color, 0.12)"};
-$radius: 12px;
-$radius-sm: 8px;
+// Material Design 3 for Hyprland Shell
+// Compact sizing + expressive motion
 
-// Bar
+$primary: #{"@accent_bg_color"};
+$on-primary: #{"@accent_fg_color"};
+$surface: #1c1b1f;
+$surface-container: #211f26;
+$surface-container-high: #2b2930;
+$surface-container-highest: #36343b;
+$surface-bright: #3b383e;
+$on-surface: #e6e1e5;
+$on-surface-variant: #cac4d0;
+$outline: #938f99;
+$outline-variant: #49454f;
 
-window.bar {
-  background: transparent;
-  color: $fg;
-  font-size: 13px;
-  font-weight: 500;
+$r-full: 14px;
+$r-lg: 12px;
+$r-md: 8px;
+$r-sm: 6px;
 
-  > centerbox {
-    background: $bg;
-    border-radius: $radius;
-    margin: 6px 8px;
-    padding: 0 4px;
-  }
+$motion: 300ms cubic-bezier(0.2, 0, 0, 1);
+$motion-fast: 150ms cubic-bezier(0.2, 0, 0, 1);
 
-  button {
-    border-radius: $radius-sm;
-    padding: 4px 8px;
-    margin: 3px 1px;
-    transition: background 150ms ease;
+// ─── Bar ────────────────────────────────────────────────────
 
-    &:hover {
-      background: $hover;
-    }
-
-    &:active {
-      background: #{"alpha(@theme_fg_color, 0.18)"};
-    }
-  }
-
-  image {
-    -gtk-icon-size: 16px;
-  }
-}
-
-// Workspaces
-
-.workspaces {
-  button {
-    min-width: 8px;
-    min-height: 8px;
-    padding: 4px;
-    margin: 4px 2px;
-    border-radius: 50%;
-    background: $surface;
-
-    label {
-      font-size: 0px;
-      min-width: 8px;
-      min-height: 8px;
-    }
-
-    &.focused {
-      background: $fg;
-      min-width: 20px;
-      border-radius: 4px;
-    }
-  }
-}
-
-// Active Window
-
-.active-window {
-  padding: 0 8px;
-  color: $dim;
-}
-
-// Clock
-
-.clock {
-  padding: 0 10px;
-  font-weight: 600;
-}
-
-// Status Indicators
-
-.status-indicators {
-  padding: 4px 10px;
-  border-radius: $radius-sm;
+window#bar {
   background: $surface;
-
-  &:hover {
-    background: $hover;
-  }
-
-  image {
-    -gtk-icon-size: 16px;
-  }
-}
-
-// Battery
-
-.battery {
-  padding: 0 6px;
-}
-
-// Resources
-
-.resources {
-  padding: 0 6px;
-  color: $dim;
+  color: $on-surface;
   font-size: 12px;
+  font-weight: 500;
 }
 
-// System Tray
+centerbox#centerbox {
+  background: $surface-container;
+  border-radius: $r-full;
+  margin: 4px 6px;
+  padding: 0 2px;
+  min-height: 30px;
+}
 
-.tray {
-  .tray-item {
-    padding: 2px 4px;
-    border-radius: $radius-sm;
+window#bar button {
+  border-radius: $r-full;
+  padding: 0 8px;
+  margin: 3px 1px;
+  min-height: 24px;
+  transition: all $motion;
 
-    image {
-      -gtk-icon-size: 16px;
-    }
+  &:hover {
+    background: $surface-container-highest;
+  }
+
+  &:active {
+    background: $surface-bright;
   }
 }
 
-// Control Center
+window#bar image {
+  -gtk-icon-size: 14px;
+}
 
-window.control-center {
+// ─── Workspaces ─────────────────────────────────────────────
+
+box#workspaces {
+  background: $surface;
+  border-radius: $r-full;
+  padding: 2px 4px;
+  margin: 3px 0;
+}
+
+button#workspace-button {
+  min-width: 6px;
+  min-height: 6px;
+  padding: 0;
+  margin: 0 2px;
+  border-radius: $r-full;
+  background: $outline-variant;
+  transition: all $motion;
+
+  label {
+    font-size: 0px;
+    min-width: 6px;
+    min-height: 6px;
+  }
+
+  &:hover {
+    background: $outline;
+  }
+
+  &.focused {
+    background: $primary;
+    min-width: 18px;
+  }
+}
+
+// ─── Active Window ──────────────────────────────────────────
+
+box#active-window {
+  padding: 0 10px;
+  color: $on-surface-variant;
+  font-size: 11px;
+}
+
+// ─── Clock ──────────────────────────────────────────────────
+
+menubutton#clock {
+  padding: 0 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: $on-surface;
+  border-radius: $r-full;
+  margin: 3px 2px;
+}
+
+// ─── Status Indicators ─────────────────────────────────────
+
+button#status-indicators {
+  background: $surface-container-high;
+  border-radius: $r-full;
+  padding: 0 10px;
+  margin: 3px 1px;
+  min-height: 24px;
+  transition: all $motion;
+
+  &:hover {
+    background: $surface-container-highest;
+  }
+
+  image {
+    -gtk-icon-size: 14px;
+    margin: 0 1px;
+  }
+}
+
+// ─── Battery ────────────────────────────────────────────────
+
+box#battery {
+  padding: 0 6px;
+  font-size: 11px;
+  color: $on-surface-variant;
+
+  image {
+    margin-end: 3px;
+  }
+}
+
+// ─── Resources ──────────────────────────────────────────────
+
+box#resources {
+  padding: 0 6px;
+  font-size: 10px;
+  color: $outline;
+}
+
+// ─── System Tray ────────────────────────────────────────────
+
+box#tray {
+  margin: 0 1px;
+}
+
+menubutton#tray-item {
+  padding: 0 3px;
+  margin: 3px 1px;
+  border-radius: $r-sm;
+  min-height: 24px;
+  transition: all $motion-fast;
+
+  &:hover {
+    background: $surface-container-highest;
+  }
+
+  image {
+    -gtk-icon-size: 14px;
+  }
+}
+
+// ─── Control Center ─────────────────────────────────────────
+
+window#control-center {
   background: transparent;
 }
 
-.control-center-content {
-  background: $bg;
-  border-radius: $radius;
-  padding: 16px;
-  margin: 6px 8px;
-  min-width: 340px;
+box#control-center-content {
+  background: $surface-container;
+  border-radius: $r-lg;
+  padding: 12px;
+  margin: 4px 6px;
+  min-width: 280px;
 }
 
-// Toggle Tiles
+// ─── Toggle Tiles ───────────────────────────────────────────
 
-.toggle-tile {
-  border-radius: $radius-sm;
-  padding: 12px;
-  background: $surface;
-  transition: background 150ms ease;
+button#toggle-tile {
+  border-radius: $r-md;
+  padding: 10px 12px;
+  background: $surface-container-highest;
+  transition: all $motion;
+  min-height: 40px;
 
   &:hover {
-    background: $hover;
+    background: $surface-bright;
   }
 
   &.active {
-    background: $accent;
-    color: $accent-fg;
+    background: $primary;
+    color: $on-primary;
 
-    .toggle-sublabel {
-      color: #{"alpha(@accent_fg_color, 0.7)"};
-    }
-  }
-
-  image {
-    -gtk-icon-size: 18px;
-  }
-
-  label {
-    font-weight: 600;
-    font-size: 13px;
-  }
-
-  .toggle-sublabel {
-    font-size: 11px;
-    font-weight: 400;
-    color: $dim;
-  }
-}
-
-// Sliders
-
-.sliders {
-  background: $surface;
-  border-radius: $radius-sm;
-  padding: 12px;
-}
-
-.slider-row {
-  image {
-    -gtk-icon-size: 18px;
-  }
-
-  scale {
-    margin: 0 4px;
-
-    trough {
-      border-radius: 4px;
-      min-height: 6px;
-      background: #{"alpha(@theme_fg_color, 0.15)"};
+    image {
+      color: $on-primary;
     }
 
-    highlight {
-      border-radius: 4px;
-      min-height: 6px;
-      background: $fg;
-    }
-
-    slider {
-      min-width: 16px;
-      min-height: 16px;
-      border-radius: 50%;
-      background: $fg;
-      margin: -5px;
+    label#toggle-sublabel {
+      color: $on-primary;
+      opacity: 0.8;
     }
   }
-}
-
-// Profile Selector
-
-.profile-selector {
-  background: $surface;
-  border-radius: $radius-sm;
-  padding: 8px;
-
-  image {
-    -gtk-icon-size: 18px;
-    margin: 0 4px;
-  }
-
-  .profile-button {
-    border-radius: 6px;
-    padding: 6px 10px;
-    font-size: 12px;
-    font-weight: 500;
-
-    &.active {
-      background: $accent;
-      color: $accent-fg;
-    }
-  }
-}
-
-// Now Playing
-
-.now-playing-card {
-  background: $surface;
-  border-radius: $radius-sm;
-  padding: 12px;
-
-  .now-playing-icon {
-    -gtk-icon-size: 32px;
-  }
-
-  .now-playing-title {
-    font-weight: 600;
-    font-size: 13px;
-  }
-
-  .now-playing-artist {
-    font-size: 11px;
-    color: $dim;
-  }
-}
-
-.media-button {
-  border-radius: 50%;
-  padding: 6px;
-  min-width: 32px;
-  min-height: 32px;
 
   image {
     -gtk-icon-size: 16px;
+    color: $on-surface;
+  }
+
+  label {
+    font-weight: 500;
+    font-size: 12px;
+    color: $on-surface;
+  }
+
+  label#toggle-sublabel {
+    font-size: 10px;
+    font-weight: 400;
+    color: $on-surface-variant;
+    margin-top: 1px;
+  }
+}
+
+// ─── Sliders ────────────────────────────────────────────────
+
+box#sliders {
+  background: $surface-container-high;
+  border-radius: $r-md;
+  padding: 10px;
+}
+
+box#slider-row {
+  min-height: 24px;
+
+  image {
+    -gtk-icon-size: 16px;
+    color: $on-surface-variant;
+    margin-end: 6px;
+  }
+
+  scale {
+    margin: 0;
+
+    trough {
+      border-radius: $r-full;
+      min-height: 12px;
+      background: $outline-variant;
+      transition: all $motion;
+    }
+
+    highlight {
+      border-radius: $r-full;
+      min-height: 12px;
+      background: $primary;
+      transition: all $motion;
+    }
+
+    slider {
+      min-width: 4px;
+      min-height: 16px;
+      border-radius: 2px;
+      background: $on-primary;
+      margin: -2px 0;
+      transition: all $motion-fast;
+    }
+  }
+}
+
+// ─── Profile Selector ──────────────────────────────────────
+
+box#profile-selector {
+  background: $surface-container-high;
+  border-radius: $r-md;
+  padding: 4px 8px;
+
+  image {
+    -gtk-icon-size: 16px;
+    color: $on-surface-variant;
+    margin-end: 6px;
+  }
+}
+
+button#profile-button {
+  border-radius: $r-full;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 500;
+  color: $on-surface-variant;
+  min-height: 24px;
+  transition: all $motion;
+
+  &:hover {
+    background: $surface-container-highest;
+  }
+
+  &.active {
+    background: $primary;
+    color: $on-primary;
+  }
+}
+
+// ─── Now Playing ────────────────────────────────────────────
+
+box#now-playing-card {
+  background: $surface-container-high;
+  border-radius: $r-md;
+  padding: 10px;
+}
+
+image#now-playing-icon {
+  -gtk-icon-size: 28px;
+  color: $primary;
+  margin-end: 4px;
+}
+
+label#now-playing-title {
+  font-weight: 500;
+  font-size: 12px;
+  color: $on-surface;
+}
+
+label#now-playing-artist {
+  font-size: 10px;
+  color: $on-surface-variant;
+  margin-top: 1px;
+}
+
+button#media-button {
+  border-radius: $r-full;
+  padding: 4px;
+  min-width: 28px;
+  min-height: 28px;
+  margin: 0 1px;
+  transition: all $motion;
+
+  &:hover {
+    background: $surface-container-highest;
+  }
+
+  image {
+    -gtk-icon-size: 16px;
+    color: $on-surface;
   }
 }

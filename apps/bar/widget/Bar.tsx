@@ -15,13 +15,12 @@ export default function Bar(gdkmonitor: Gdk.Monitor) {
     <window
       visible
       name="bar"
-      cssName="bar"
       gdkmonitor={gdkmonitor}
       exclusivity={Astal.Exclusivity.EXCLUSIVE}
       anchor={TOP | LEFT | RIGHT}
       application={app}
     >
-      <centerbox cssName="centerbox">
+      <centerbox name="centerbox">
         <box $type="start" hexpand halign={Gtk.Align.START} spacing={4}>
           <ActiveWindow />
         </box>

@@ -10,7 +10,7 @@ export default function Volume() {
   const volume = createBinding(speaker, "volume")
 
   return (
-    <box cssName="volume" tooltipText={volume.as((v) => `${Math.round(v * 100)}%`)}>
+    <box name="volume" tooltipText={volume.as((v) => `${Math.round(v * 100)}%`)}>
       <image iconName={volumeIcon} />
       <label label={volume.as((v) => `${Math.round(v * 100)}%`)} />
     </box>

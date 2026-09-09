@@ -7,7 +7,7 @@ export default function Bluetooth() {
 
   return (
     <box
-      cssName="bluetooth"
+      name="bluetooth"
       tooltipText={isPowered.as((on) => (on ? "Bluetooth On" : "Bluetooth Off"))}
     >
       <image

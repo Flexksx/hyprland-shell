@@ -7,7 +7,7 @@ export default function ActiveWindow() {
   const title = createBinding(hyprland, "focusedClient", "title")
 
   return (
-    <box cssName="active-window">
+    <box name="active-window">
       <label
         label={title.as((title) => title ?? "")}
         ellipsize={Pango.EllipsizeMode.END}

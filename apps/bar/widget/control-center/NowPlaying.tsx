@@ -8,7 +8,7 @@ export default function NowPlaying() {
   const players = createBinding(mpris, "players")
 
   return (
-    <box cssName="now-playing" vertical visible={players.as((p) => p.length > 0)}>
+    <box name="now-playing" orientation={Gtk.Orientation.VERTICAL} visible={players.as((p) => p.length > 0)}>
       {players.as((list) => {
         const player = list[0]
         if (!player) return <box />
@@ -20,35 +20,35 @@ export default function NowPlaying() {
         const canGoPrevious = createBinding(player, "canGoPrevious")
 
         return (
-          <box vertical cssName="now-playing-card" spacing={8}>
+          <box orientation={Gtk.Orientation.VERTICAL} name="now-playing-card" spacing={8}>
             <box spacing={8}>
-              <image iconName="applications-multimedia-symbolic" cssName="now-playing-icon" />
-              <box vertical hexpand>
+              <image iconName="applications-multimedia-symbolic" name="now-playing-icon" />
+              <box orientation={Gtk.Orientation.VERTICAL} hexpand>
                 <label
                   label={title.as((t) => t || "Unknown")}
                   halign={Gtk.Align.START}
                   ellipsize={Pango.EllipsizeMode.END}
                   maxWidthChars={24}
-                  cssName="now-playing-title"
+                  name="now-playing-title"
                 />
                 <label
                   label={artist.as((a) => a || "Unknown Artist")}
                   halign={Gtk.Align.START}
                   ellipsize={Pango.EllipsizeMode.END}
                   maxWidthChars={24}
-                  cssName="now-playing-artist"
+                  name="now-playing-artist"
                 />
               </box>
             </box>
             <box halign={Gtk.Align.CENTER} spacing={4}>
               <button
-                cssName="media-button"
+                name="media-button"
                 sensitive={canGoPrevious}
                 onClicked={() => player.previous()}
               >
                 <image iconName="media-skip-backward-symbolic" />
               </button>
-              <button cssName="media-button" onClicked={() => player.play_pause()}>
+              <button name="media-button" onClicked={() => player.play_pause()}>
                 <image
                   iconName={playbackStatus.as((s) =>
                     s === Mpris.PlaybackStatus.PLAYING
@@ -57,7 +57,7 @@ export default function NowPlaying() {
                   )}
                 />
               </button>
-              <button cssName="media-button" sensitive={canGoNext} onClicked={() => player.next()}>
+              <button name="media-button" sensitive={canGoNext} onClicked={() => player.next()}>
                 <image iconName="media-skip-forward-symbolic" />
               </button>
             </box>

@@ -9,7 +9,7 @@ function TrayItem({ item }: { item: TrayService.TrayItem }) {
 
   return (
     <menubutton
-      cssName="tray-item"
+      name="tray-item"
       tooltipMarkup={tooltipMarkup}
       menuModel={menuModel}
       $={(self: Gtk.MenuButton) => {
@@ -27,7 +27,7 @@ export default function Tray() {
   const items = createBinding(tray, "items")
 
   return (
-    <box cssName="tray">
+    <box name="tray">
       <For each={items} id={(item) => item.get_item_id()}>
         {(item) => <TrayItem item={item} />}
       </For>

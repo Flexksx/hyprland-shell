@@ -2,7 +2,8 @@ import { createPoll } from "ags/time"
 
 const POLL_INTERVAL_MS = 2000
 
-const CPU_CMD = "awk '/^cpu /{u=$2+$4; t=$2+$3+$4+$5+$6+$7+$8; print int(u*100/t)}' /proc/stat"
+const CPU_CMD =
+  "awk '/^cpu /{u=$2+$4; t=$2+$3+$4+$5+$6+$7+$8; print int(u*100/t)}' /proc/stat"
 
 const MEM_CMD = "free -m | awk '/^Mem:/{printf \"%dM\", $3}'"
 
@@ -11,14 +12,17 @@ export default function Resources() {
   const mem = createPoll("", POLL_INTERVAL_MS, ["bash", "-c", MEM_CMD])
 
   return (
-    <box cssName="resources" spacing={8}>
+    <box name="resources" spacing={12}>
       <box spacing={4}>
         <image iconName="utilities-system-monitor-symbolic" />
-        <label label={cpu} />
+        <label
+          label={cpu.as((v) => `${v}%`)}
+          name="resource-label"
+        />
       </box>
       <box spacing={4}>
         <image iconName="drive-harddisk-symbolic" />
-        <label label={mem} />
+        <label label={mem} name="resource-label" />
       </box>
     </box>
   )
