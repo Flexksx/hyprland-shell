@@ -1,60 +1,22 @@
 $schema: 'https://moonrepo.dev/schemas/v2/project.json'
 
-language: 'typescript'
-tags: ['typescript']
-
-fileGroups:
-  sources:
-    - '**/*.ts'
-    - '**/*.tsx'
-  styles:
-    - '**/*.scss'
-    - '**/*.css'
-  configs:
-    - '*.json'
-    - 'tsconfig.json'
+layer: 'configuration'
 
 tasks:
   format:
     command: 'biome format --write .'
     toolchains: 'system'
     inputs:
-      - '@globs(sources)'
+      - '**/*.ts'
+      - '**/*.tsx'
+    options:
+      runFromWorkspaceRoot: true
 
   lint:
     command: 'biome lint .'
     toolchains: 'system'
     inputs:
-      - '@globs(sources)'
-
-  check:
-    command: 'biome check .'
-    toolchains: 'system'
-    inputs:
-      - '@globs(sources)'
-
-  fix:
-    command: 'biome check --write .'
-    toolchains: 'system'
-    inputs:
-      - '@globs(sources)'
-
-  run:
-    command: 'ags run .'
-    toolchains: 'system'
+      - '**/*.ts'
+      - '**/*.tsx'
     options:
-      cache: false
-      persistent: true
-
-  build:
-    command: 'ags bundle app.ts ./result/bin/hyprland-shell'
-    toolchains: 'system'
-    inputs:
-      - '@globs(sources)'
-      - '@globs(styles)'
-
-  deps:
-    command: 'npx dependency-cruiser --config .dependency-cruiser.cjs app.ts'
-    toolchains: 'system'
-    inputs:
-      - '@globs(sources)'
+      runFromWorkspaceRoot: true

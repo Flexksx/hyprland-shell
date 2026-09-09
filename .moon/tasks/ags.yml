@@ -1,0 +1,39 @@
+$schema: 'https://moonrepo.dev/schemas/v2/tasks.json'
+
+inheritedBy:
+  tags: ['ags']
+
+fileGroups:
+  sources:
+    - '**/*.ts'
+    - '**/*.tsx'
+  styles:
+    - '**/*.scss'
+    - '**/*.css'
+
+tasks:
+  format:
+    command: 'biome format --write .'
+    toolchains: 'system'
+    inputs:
+      - '@globs(sources)'
+
+  lint:
+    command: 'biome lint .'
+    toolchains: 'system'
+    inputs:
+      - '@globs(sources)'
+
+  build:
+    command: 'ags bundle app.ts'
+    toolchains: 'system'
+    inputs:
+      - '@globs(sources)'
+      - '@globs(styles)'
+
+  start:
+    command: 'ags run .'
+    toolchains: 'system'
+    options:
+      cache: false
+      persistent: true

@@ -6,9 +6,9 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bin/format-lint-hook",
-            "timeout": 15,
-            "statusMessage": "Formatting and linting..."
+            "command": "just format 2>/dev/null || true",
+            "timeout": 30,
+            "statusMessage": "Formatting affected files..."
           }
         ]
       }

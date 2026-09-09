@@ -1,6 +1,5 @@
 node_modules/
 @girs/
-result
 result/
 .direnv/
 .moon/cache/

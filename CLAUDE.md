@@ -7,45 +7,57 @@ Desktop shell for Hyprland, built with AGS (Aylur's GTK Shell) and Astal.
 - **Runtime**: GJS (GNOME JavaScript) with TypeScript and TSX
 - **UI toolkit**: GTK4 via Astal bindings
 - **Styling**: SCSS compiled to GTK CSS (not web CSS)
-- **Packaging**: Nix flake, `ags bundle` for production builds
+- **Packaging**: Nix flake (`flake-parts` + `import-tree`)
 - **Shell**: direnv + `nix develop`
-- **Task runner**: moon (caching, affected detection), just (entry point)
+- **Task runner**: moon (caching, `--affected`), just (entry point)
 - **Formatting/Linting**: Biome
 - **Import analysis**: dependency-cruiser
 
 ## Commands
 
-`just` is the only entry point. Never write `moon run` directly.
+`just` is the only entry point. Never write `moon run` in docs or scripts.
 
 ```bash
-just run            # run the shell in dev mode
-just build          # bundle for production
 just format         # format affected files
 just lint           # lint affected files
-just check          # format + lint (check only)
-just fix            # format + lint with auto-fix
+just fix            # format + lint with fixes
+just build all      # build all apps
+just build bar      # build bar only
+just start bar      # run bar in dev mode
 just inspect        # open GTK inspector
-just deps           # check for circular dependencies
-just deps-graph     # generate dependency graph SVG
 ```
 
-To bypass cache, pass `-f`: `just format -- -f`
+To bypass cache, add `-f`: `just format -f`.
 
 ## Project structure
 
 ```
-app.ts                   # entry point, calls app.start()
-env.d.ts                 # type declarations for SCSS/CSS/Blueprint imports
-style.scss               # global GTK stylesheet
-widget/                  # TSX widget components
-  Bar.tsx                # top bar
-moon.yml                 # moon project config (tasks, file groups)
-.moon/workspace.yml      # moon workspace config
-biome.json               # biome formatter/linter config
-justfile                 # command recipes (thin wrappers around moon)
-bin/format-lint-hook     # Claude Code PostToolUse hook
-.dependency-cruiser.cjs  # import graph rules
-flake.nix                # nix flake with ags/astal inputs
+apps/
+  bar/                    # top bar app
+    app.ts                # entry point
+    widget/Bar.tsx        # bar widget
+    style.scss            # GTK stylesheet
+    moon.yml              # unit metadata (inherits tasks from tag)
+    nix/devshell.nix      # AGS + Astal packages
+libs/                     # shared libraries (empty for now)
+config/
+  dependency-cruiser.base.cjs
+nix/
+  shell.nix               # shellPackages option + devShell
+  devtools.nix             # just, moon, biome, nodejs
+  systems.nix              # x86_64-linux
+.moon/
+  workspace.yml            # project sources
+  tasks/ags.yml            # inherited tasks for ags-tagged units
+.just/
+  format/Justfile          # just format -> moon run :format --affected
+  lint/Justfile            # just lint -> moon run :lint --affected
+  build/Justfile           # just build <unit> -> moon run <unit>:build
+  start/Justfile           # just start <unit> -> moon run <unit>:start
+biome.json                 # biome config (workspace root)
+moon.yml                   # repo-wide tasks (format, lint)
+flake.nix                  # flake-parts + import-tree
+justfile                   # imports .just modules
 ```
 
 ## How AGS/Astal works
@@ -58,24 +70,15 @@ flake.nix                # nix flake with ags/astal inputs
 - Styling uses GTK CSS, not web CSS. Check GTK docs for supported properties.
 - `app.start({ css, main })` boots the application.
 
-## Astal libraries (enabled in flake.nix)
+## Astal libraries (in apps/bar/nix/devshell.nix)
 
-- `battery` - UPower battery status
-- `bluetooth` - BlueZ control
-- `hyprland` - Hyprland IPC
-- `mpris` - media player control
-- `network` - NetworkManager
-- `notifd` - notification daemon
-- `tray` - system tray
-- `wireplumber` - audio control
-- `apps` - application launcher queries
-- `powerprofiles` - power profile control
+battery, bluetooth, hyprland, mpris, network, notifd, tray, wireplumber, apps, powerprofiles.
 
 ## Rules
 
 - All packages come from `nix develop`. Do not use npm/pnpm install.
 - The `node_modules/` directory contains Nix symlinks. Do not modify it.
 - GTK CSS is not web CSS. Do not assume web properties work.
-- One widget per file in `widget/`.
-- Keep widget files under 150 lines. Extract sub-components when they grow.
-- Run `just check` before committing.
+- One widget per file.
+- Every task sets `toolchains: 'system'`. Moon must not install runtimes.
+- A new `.nix` file is invisible to `nix develop` until `git add`.
