@@ -28,8 +28,10 @@
         pkgs.libsoup_3
       ];
   in {
-    shellPackages = [
-      (ags.default.override {inherit extraPackages;})
-    ];
+    shellPackages =
+      astalPackages
+      ++ [
+        (ags.default.override {inherit extraPackages;})
+      ];
   };
 }
