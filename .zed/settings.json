@@ -1,0 +1,47 @@
+{
+  "formatter": {
+    "external": {
+      "command": "biome",
+      "arguments": ["format", "--stdin-file-path", "{buffer_path}"]
+    }
+  },
+  "format_on_save": "on",
+  "tab_size": 2,
+  "languages": {
+    "TypeScript": {
+      "formatter": {
+        "external": {
+          "command": "biome",
+          "arguments": ["format", "--stdin-file-path", "{buffer_path}"]
+        }
+      },
+      "code_actions_on_format": {
+        "source.fixAll.biome": true,
+        "source.organizeImports.biome": true
+      }
+    },
+    "TSX": {
+      "formatter": {
+        "external": {
+          "command": "biome",
+          "arguments": ["format", "--stdin-file-path", "{buffer_path}"]
+        }
+      },
+      "code_actions_on_format": {
+        "source.fixAll.biome": true,
+        "source.organizeImports.biome": true
+      }
+    },
+    "SCSS": {
+      "tab_size": 2
+    }
+  },
+  "lsp": {
+    "biome": {
+      "settings": {
+        "require_config_file": true
+      }
+    }
+  },
+  "file_scan_exclusions": ["node_modules", "@girs", "result", ".direnv"]
+}
