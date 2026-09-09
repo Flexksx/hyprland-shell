@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+PROJECT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
+
+if ! command -v moon &>/dev/null; then
+  PROFILE=$(find "$PROJECT_DIR/.direnv" -name 'flake-profile-*.rc' -print -quit 2>/dev/null)
+  if [[ -n "$PROFILE" ]]; then
+    source "$PROFILE"
+  else
+    exit 0
+  fi
+fi
+
+FILE=$(jq -r '.tool_input.file_path // .tool_response.filePath // empty')
+
+if [[ -z "$FILE" || ! -f "$FILE" ]]; then
+  exit 0
+fi
+
+if echo "$FILE" | grep -qE '\.(ts|tsx)$'; then
+  cd "$PROJECT_DIR"
+  moon run :fix --affected 2>/dev/null || true
+fi

@@ -9,24 +9,27 @@ Desktop shell for Hyprland, built with AGS (Aylur's GTK Shell) and Astal.
 - **Styling**: SCSS compiled to GTK CSS (not web CSS)
 - **Packaging**: Nix flake, `ags bundle` for production builds
 - **Shell**: direnv + `nix develop`
+- **Task runner**: moon (caching, affected detection), just (entry point)
 - **Formatting/Linting**: Biome
 - **Import analysis**: dependency-cruiser
 
 ## Commands
 
-`just` is the only entry point.
+`just` is the only entry point. Never write `moon run` directly.
 
 ```bash
 just run            # run the shell in dev mode
 just build          # bundle for production
-just format         # format all source files
-just lint           # lint all source files
+just format         # format affected files
+just lint           # lint affected files
 just check          # format + lint (check only)
 just fix            # format + lint with auto-fix
 just inspect        # open GTK inspector
 just deps           # check for circular dependencies
 just deps-graph     # generate dependency graph SVG
 ```
+
+To bypass cache, pass `-f`: `just format -- -f`
 
 ## Project structure
 
@@ -36,8 +39,11 @@ env.d.ts                 # type declarations for SCSS/CSS/Blueprint imports
 style.scss               # global GTK stylesheet
 widget/                  # TSX widget components
   Bar.tsx                # top bar
+moon.yml                 # moon project config (tasks, file groups)
+.moon/workspace.yml      # moon workspace config
 biome.json               # biome formatter/linter config
-justfile                 # command recipes
+justfile                 # command recipes (thin wrappers around moon)
+bin/format-lint-hook     # Claude Code PostToolUse hook
 .dependency-cruiser.cjs  # import graph rules
 flake.nix                # nix flake with ags/astal inputs
 ```

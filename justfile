@@ -1,28 +1,32 @@
 # Hyprland Shell
 
+[private]
+default:
+    just --list
+
+# Format affected files
+format *FLAGS:
+    moon run :format --affected {{FLAGS}}
+
+# Lint affected files
+lint *FLAGS:
+    moon run :lint --affected {{FLAGS}}
+
+# Check affected files (no fixes)
+check *FLAGS:
+    moon run :check --affected {{FLAGS}}
+
+# Format and lint with fixes
+fix *FLAGS:
+    moon run :fix --affected {{FLAGS}}
+
 # Run the shell in dev mode
 run:
-    ags run .
+    moon run :run
 
 # Bundle for production
 build:
-    ags bundle app.ts ./result/bin/hyprland-shell
-
-# Format all source files
-format:
-    biome format --write .
-
-# Lint all source files
-lint:
-    biome lint .
-
-# Format and lint (check only, no fixes)
-check:
-    biome check .
-
-# Format and lint with fixes
-fix:
-    biome check --write .
+    moon run :build
 
 # Open GTK inspector
 inspect:
@@ -30,7 +34,7 @@ inspect:
 
 # Check import graph for circular dependencies
 deps:
-    npx dependency-cruiser --config .dependency-cruiser.cjs app.ts
+    moon run :deps
 
 # Generate dependency graph as SVG
 deps-graph:

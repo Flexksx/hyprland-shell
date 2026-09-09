@@ -3,4 +3,6 @@ node_modules/
 result
 result/
 .direnv/
+.moon/cache/
+.moon/hashes/
 deps.svg

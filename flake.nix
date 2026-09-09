@@ -76,6 +76,7 @@
           })
           pkgs.biome
           pkgs.just
+          pkgs.moon
           pkgs.nodejs
         ];
       };
