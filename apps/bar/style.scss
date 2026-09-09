@@ -1,8 +1,7 @@
-// https://gitlab.gnome.org/GNOME/gtk/-/blob/gtk-3-24/gtk/theme/Adwaita/_colors-public.scss
 $fg-color: #{"@theme_fg_color"};
 $bg-color: #{"@theme_bg_color"};
 
-window.Bar {
+window.bar {
   background: transparent;
   color: $fg-color;
   font-weight: bold;
@@ -17,4 +16,24 @@ window.Bar {
     border-radius: 8px;
     margin: 2px;
   }
+}
+
+.active-window {
+  margin: 0 8px;
+}
+
+.workspaces {
+  button {
+    min-width: 30px;
+    min-height: 30px;
+
+    &.focused {
+      background: $fg-color;
+      color: $bg-color;
+    }
+  }
+}
+
+.clock {
+  margin: 0 8px;
 }

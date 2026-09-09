@@ -21,9 +21,8 @@ Desktop shell for Hyprland, built with AGS (Aylur's GTK Shell) and Astal.
 just format         # format affected files
 just lint           # lint affected files
 just fix            # format + lint with fixes
-just build all      # build all apps
-just build bar      # build bar only
-just start bar      # run bar in dev mode
+just build          # build bar
+just start          # run bar in dev mode
 just inspect        # open GTK inspector
 ```
 
@@ -52,8 +51,8 @@ nix/
 .just/
   format/Justfile          # just format -> moon run :format --affected
   lint/Justfile            # just lint -> moon run :lint --affected
-  build/Justfile           # just build <unit> -> moon run <unit>:build
-  start/Justfile           # just start <unit> -> moon run <unit>:start
+  format/Justfile          # just format -> moon run :format --affected
+  lint/Justfile            # just lint -> moon run :lint --affected
 biome.json                 # biome config (workspace root)
 moon.yml                   # repo-wide tasks (format, lint)
 flake.nix                  # flake-parts + import-tree
