@@ -1,39 +1,273 @@
-$fg-color: #{"@theme_fg_color"};
-$bg-color: #{"@theme_bg_color"};
+$fg: #{"@theme_fg_color"};
+$bg: #{"@theme_bg_color"};
+$accent: #{"@accent_bg_color"};
+$accent-fg: #{"@accent_fg_color"};
+$dim: #{"alpha(@theme_fg_color, 0.6)"};
+$surface: #{"alpha(@theme_fg_color, 0.08)"};
+$hover: #{"alpha(@theme_fg_color, 0.12)"};
+$radius: 12px;
+$radius-sm: 8px;
+
+// Bar
 
 window.bar {
   background: transparent;
-  color: $fg-color;
-  font-weight: bold;
+  color: $fg;
+  font-size: 13px;
+  font-weight: 500;
 
   > centerbox {
-    background: $bg-color;
-    border-radius: 10px;
-    margin: 8px;
+    background: $bg;
+    border-radius: $radius;
+    margin: 6px 8px;
+    padding: 0 4px;
   }
 
   button {
-    border-radius: 8px;
-    margin: 2px;
+    border-radius: $radius-sm;
+    padding: 4px 8px;
+    margin: 3px 1px;
+    transition: background 150ms ease;
+
+    &:hover {
+      background: $hover;
+    }
+
+    &:active {
+      background: #{"alpha(@theme_fg_color, 0.18)"};
+    }
+  }
+
+  image {
+    -gtk-icon-size: 16px;
   }
 }
 
-.active-window {
-  margin: 0 8px;
-}
+// Workspaces
 
 .workspaces {
   button {
-    min-width: 30px;
-    min-height: 30px;
+    min-width: 8px;
+    min-height: 8px;
+    padding: 4px;
+    margin: 4px 2px;
+    border-radius: 50%;
+    background: $surface;
+
+    label {
+      font-size: 0px;
+      min-width: 8px;
+      min-height: 8px;
+    }
 
     &.focused {
-      background: $fg-color;
-      color: $bg-color;
+      background: $fg;
+      min-width: 20px;
+      border-radius: 4px;
     }
   }
 }
 
+// Active Window
+
+.active-window {
+  padding: 0 8px;
+  color: $dim;
+}
+
+// Clock
+
 .clock {
-  margin: 0 8px;
+  padding: 0 10px;
+  font-weight: 600;
+}
+
+// Status Indicators
+
+.status-indicators {
+  padding: 4px 10px;
+  border-radius: $radius-sm;
+  background: $surface;
+
+  &:hover {
+    background: $hover;
+  }
+
+  image {
+    -gtk-icon-size: 16px;
+  }
+}
+
+// Battery
+
+.battery {
+  padding: 0 6px;
+}
+
+// Resources
+
+.resources {
+  padding: 0 6px;
+  color: $dim;
+  font-size: 12px;
+}
+
+// System Tray
+
+.tray {
+  .tray-item {
+    padding: 2px 4px;
+    border-radius: $radius-sm;
+
+    image {
+      -gtk-icon-size: 16px;
+    }
+  }
+}
+
+// Control Center
+
+window.control-center {
+  background: transparent;
+}
+
+.control-center-content {
+  background: $bg;
+  border-radius: $radius;
+  padding: 16px;
+  margin: 6px 8px;
+  min-width: 340px;
+}
+
+// Toggle Tiles
+
+.toggle-tile {
+  border-radius: $radius-sm;
+  padding: 12px;
+  background: $surface;
+  transition: background 150ms ease;
+
+  &:hover {
+    background: $hover;
+  }
+
+  &.active {
+    background: $accent;
+    color: $accent-fg;
+
+    .toggle-sublabel {
+      color: #{"alpha(@accent_fg_color, 0.7)"};
+    }
+  }
+
+  image {
+    -gtk-icon-size: 18px;
+  }
+
+  label {
+    font-weight: 600;
+    font-size: 13px;
+  }
+
+  .toggle-sublabel {
+    font-size: 11px;
+    font-weight: 400;
+    color: $dim;
+  }
+}
+
+// Sliders
+
+.sliders {
+  background: $surface;
+  border-radius: $radius-sm;
+  padding: 12px;
+}
+
+.slider-row {
+  image {
+    -gtk-icon-size: 18px;
+  }
+
+  scale {
+    margin: 0 4px;
+
+    trough {
+      border-radius: 4px;
+      min-height: 6px;
+      background: #{"alpha(@theme_fg_color, 0.15)"};
+    }
+
+    highlight {
+      border-radius: 4px;
+      min-height: 6px;
+      background: $fg;
+    }
+
+    slider {
+      min-width: 16px;
+      min-height: 16px;
+      border-radius: 50%;
+      background: $fg;
+      margin: -5px;
+    }
+  }
+}
+
+// Profile Selector
+
+.profile-selector {
+  background: $surface;
+  border-radius: $radius-sm;
+  padding: 8px;
+
+  image {
+    -gtk-icon-size: 18px;
+    margin: 0 4px;
+  }
+
+  .profile-button {
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-size: 12px;
+    font-weight: 500;
+
+    &.active {
+      background: $accent;
+      color: $accent-fg;
+    }
+  }
+}
+
+// Now Playing
+
+.now-playing-card {
+  background: $surface;
+  border-radius: $radius-sm;
+  padding: 12px;
+
+  .now-playing-icon {
+    -gtk-icon-size: 32px;
+  }
+
+  .now-playing-title {
+    font-weight: 600;
+    font-size: 13px;
+  }
+
+  .now-playing-artist {
+    font-size: 11px;
+    color: $dim;
+  }
+}
+
+.media-button {
+  border-radius: 50%;
+  padding: 6px;
+  min-width: 32px;
+  min-height: 32px;
+
+  image {
+    -gtk-icon-size: 16px;
+  }
 }

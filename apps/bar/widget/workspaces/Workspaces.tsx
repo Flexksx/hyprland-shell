@@ -7,9 +7,8 @@ function WorkspaceButton({ workspace }: { workspace: Hyprland.Workspace }) {
   return (
     <button
       cssName="workspace-button"
-      cssClasses={createBinding(hyprland, "focusedWorkspace").as(
-        (focusedWorkspace) =>
-          focusedWorkspace?.get_id() === workspace.get_id() ? ["focused"] : [],
+      cssClasses={createBinding(hyprland, "focusedWorkspace").as((focusedWorkspace) =>
+        focusedWorkspace?.get_id() === workspace.get_id() ? ["focused"] : [],
       )}
       onClicked={() => workspace.focus()}
     >
