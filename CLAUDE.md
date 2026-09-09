@@ -51,8 +51,6 @@ nix/
 .just/
   format/Justfile          # just format -> moon run :format --affected
   lint/Justfile            # just lint -> moon run :lint --affected
-  format/Justfile          # just format -> moon run :format --affected
-  lint/Justfile            # just lint -> moon run :lint --affected
 biome.json                 # biome config (workspace root)
 moon.yml                   # repo-wide tasks (format, lint)
 flake.nix                  # flake-parts + import-tree

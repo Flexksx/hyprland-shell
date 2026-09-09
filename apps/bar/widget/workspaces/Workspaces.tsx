@@ -1,5 +1,5 @@
 import Hyprland from "gi://AstalHyprland"
-import { createBinding } from "ags"
+import { For, createBinding } from "ags"
 
 function WorkspaceButton({ workspace }: { workspace: Hyprland.Workspace }) {
   const hyprland = Hyprland.get_default()
@@ -20,17 +20,17 @@ function WorkspaceButton({ workspace }: { workspace: Hyprland.Workspace }) {
 
 export default function Workspaces() {
   const hyprland = Hyprland.get_default()
+  const workspaces = createBinding(hyprland, "workspaces").as((workspaces) =>
+    workspaces
+      .filter((workspace) => workspace.get_id() > 0)
+      .sort((a, b) => a.get_id() - b.get_id()),
+  )
 
   return (
     <box cssName="workspaces">
-      {createBinding(hyprland, "workspaces").as((workspaces) =>
-        workspaces
-          .filter((workspace) => workspace.get_id() > 0)
-          .sort((a, b) => a.get_id() - b.get_id())
-          .map((workspace) => (
-            <WorkspaceButton workspace={workspace} />
-          )),
-      )}
+      <For each={workspaces} id={(workspace) => workspace.get_id()}>
+        {(workspace) => <WorkspaceButton workspace={workspace} />}
+      </For>
     </box>
   )
 }
